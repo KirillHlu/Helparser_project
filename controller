@@ -1,0 +1,10 @@
+from model import *
+from view import Main_root
+from tkinter import *
+
+class Controller():
+    pass
+
+if __name__ == "__main__":
+    app = Main_root()
+    app.mainloop()
