@@ -1,0 +1,57 @@
+from tkinter import *
+from tkinter import ttk
+from PIL import Image, ImageTk, ImageDraw, ImageFont
+
+from model import Parsing1
+
+class Main_root(Tk):
+    def __init__(self):
+        super().__init__()
+        self.resizable(width=False, height=False)
+        self.geometry('800x450')
+
+
+
+        self.news1 = Text(self, wrap="word", state="normal", width=41, height=20, background='#F3FFFF')
+        self.news1.grid(row=0, column=0, padx=30, pady=30, sticky="nsew")
+        self.btn1 = ttk.Button(text='👍🏻', padding=8, width=17)
+        self.btn2 = ttk.Button(text='👎🏻', padding=8, width=17)
+
+        # Create an instance of Parsing1
+        parser = Parsing1()
+        news_list, times_list, index = parser.news()
+
+        # Update the news1 Text widget with the news and time lists
+        for i in range(index):
+            self.news1.insert(END, f'\n{news_list[i]} - {times_list[i]} \n\n\n')
+
+        self.news1.config(state="disabled")
+
+        with open("weather_city", 'r') as f:
+            city = f.read().strip()
+
+
+        weather_info = parser.get_weather(city)
+        weather_info = weather_info.split()
+        weather_info = weather_info[1]
+        weather_info = weather_info.replace('°C', "")
+
+
+        image = Image.open("weather1.jpg")
+        draw = ImageDraw.Draw(image)
+        if len(weather_info) == 3:
+            font = ImageFont.truetype("arial.ttf", 200)  # Выбираем шрифт и размер текста
+            draw.text((145, 400), weather_info, fill="white", font=font)
+        else:
+            font = ImageFont.truetype("arial.ttf", 250)  # Выбираем шрифт и размер текста
+            draw.text((200, 380), weather_info, fill="white", font=font)
+        image = image.resize((100, 100))
+        photo = ImageTk.PhotoImage(image)
+        label = Label(self, image=photo)
+        label.image = photo
+
+
+
+        self.btn1.place(x=42, y=380)
+        self.btn2.place(x=220, y=380)
+        label.place(x=680, y=00)
