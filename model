@@ -1,6 +1,8 @@
-import requests
+from tkinter import *
+from tkinter import ttk
 from bs4 import BeautifulSoup
-
+import requests
+import time
 class Parsing1:
     def __init__(self):
         pass
@@ -42,3 +44,155 @@ class Parsing1:
             return response.text
         else:
             return "City not found or API error"
+
+    def click_first(self):
+
+        def click1():
+            fount_inf = []
+            index2 = 0
+            url = enter1.get()
+            word = enter2.get()
+
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            word = word.lower()
+
+            # Ищем все элементы на странице, содержащие слово "погода"
+            elements = soup.find_all(text=lambda text: word in text.lower())
+
+            # Выводим теги, классы и текст элементов
+            for element in elements:
+                parent = element.parent
+                if parent.name != 'script':
+                    found_text.insert('end', f'Tag: {parent.name}\n')
+                    found_text.insert('end', f"Class: {parent.get('class')}\n")
+                    found_text.insert('end', f'Text: {element.strip()}\n\n')
+
+        def click2():
+            fount_inf = []
+            index2 = 0
+            url = enter1.get()
+            word = enter2.get()
+
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            word = word.lower()
+
+            # Ищем все элементы на странице, содержащие слово "погода"
+            elements = soup.find_all(text=lambda text: word in text.lower())
+
+            # Выводим теги, классы и текст элементов
+            for element in elements:
+                parent = element.parent
+                if parent.name:
+                    with open('parsed_files1.txt', 'a', encoding='utf-8') as file:
+                        file.write(f'Url: {url}')
+                        file.write(f'\t\nTag: {parent.name}\n')
+                        file.write(f"Class: {parent.get('class')}\n")
+                        file.write(f'Text: {element.strip()}\n\n\n\n')
+
+        root1 = Tk()
+        root1.resizable(width=False, height=False)
+        root1.geometry('800x500')
+        root1.title('Search word')
+
+        message1 = StringVar()
+        message2 = StringVar()
+
+        label1 = Label(root1, width=500, height=800)
+        text1 = ttk.Label(root1, text='Link:', font=("Arial", 15))
+        enter1 = ttk.Entry(root1, textvariable=message1, font=("Arial", 15))
+        text2 = ttk.Label(root1, text='Word:', font=('Arial', 15))
+        enter2 = ttk.Entry(root1, textvariable=message2, font=("Arial", 15))
+        found_text = Text(root1, wrap='word', state='disabled', width=40, height=25)
+        found_text.grid(row=0, column=0, padx=400, pady=20, sticky='nsew')
+        btn1 = ttk.Button(root1, text='Search', padding=10, width=20, command=click1)
+        btn2 = ttk.Button(root1, text='Save inf', padding=8, width=16, command=click2)
+        found_text.config(state='normal')
+
+        found_text.tag_config("big", font=("Helvetica", 12))
+        found_text.tag_add("big", "1.0", "end")
+
+        label1.place(x=0, y=0)
+        text1.place(x=10, y=10)
+        enter1.place(x=10, y=50)
+        text2.place(x=10, y=110)
+        enter2.place(x=10, y=150)
+        btn1.place(x=40, y=220)
+        btn2.place(x=500, y=440)
+
+        root1.mainloop()
+
+    def click_second(self):
+        def click11():
+
+            url = enter1.get()
+            tag = enter2.get()
+            class1 = enter3.get()
+
+            response = requests.get(url)
+
+            soup = BeautifulSoup(response.text, 'lxml')
+
+            data = soup.findAll(tag, class1)
+            found_text.insert('end', f'The information from {url} ({tag}, {class1}): ')
+            for i in data:
+                found_text.insert('end', f'\n{i.text}')
+            found_text.insert('end', f'\n\n\n')
+
+        def click22():
+            url = enter1.get()
+            tag = enter2.get()
+            class1 = enter3.get()
+
+            response = requests.get(url)
+
+            soup = BeautifulSoup(response.text, 'lxml')
+
+            data = soup.findAll(tag, class1)
+
+            with open('parsed_files2.txt', 'a', encoding='utf-8') as file:
+                file.write(f'The information from {url} ({tag}, {class1}): ')
+                for i in data:
+
+                    file.write(f'\n{i.text}')
+                file.write(f'\n\n\n')
+
+        root2 = Tk()
+        root2.resizable(width=False, height=False)
+        root2.geometry('800x500')
+        root2.title('Search word')
+
+        message1 = StringVar()
+        message2 = StringVar()
+        message3 = StringVar()
+
+        label1 = Label(root2, width=500, height=800)
+        text1 = ttk.Label(root2, text='Link:', font=("Arial", 15))
+        enter1 = ttk.Entry(root2, textvariable=message1, font=("Arial", 15))
+        text2 = ttk.Label(root2, text='Tag:', font=('Arial', 15))
+        text3 = ttk.Label(root2, text='Class:', font=('Arial', 15))
+        enter2 = ttk.Entry(root2, textvariable=message2, font=("Arial", 15))
+        enter3 = ttk.Entry(root2, textvariable=message3, font=("Arial", 15))
+        found_text = Text(root2, wrap='word', state='disabled', width=40, height=25)
+        found_text.grid(row=0, column=0, padx=400, pady=20, sticky='nsew')
+        btn1 = ttk.Button(root2, text='Search', padding=10, width=20, command=click11)
+        btn2 = ttk.Button(root2, text='Save inf', padding=8, width=16, command=click22)
+        found_text.config(state='normal')
+
+        found_text.tag_config("big", font=("Helvetica", 12))
+        found_text.tag_add("big", "1.0", "end")
+
+        label1.place(x=0, y=0)
+        text1.place(x=10, y=10)
+        enter1.place(x=10, y=50)
+        text2.place(x=10, y=110)
+        enter2.place(x=10, y=150)
+        text3.place(x=10, y=210)
+        enter3.place(x=10, y=250)
+        btn1.place(x=40, y=310)
+        btn2.place(x=500, y=440)
+
+        root2.mainloop()
