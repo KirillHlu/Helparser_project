@@ -1,0 +1,44 @@
+import requests
+from bs4 import BeautifulSoup
+
+class Parsing1:
+    def __init__(self):
+        pass
+
+    def news(self):
+        url = 'https://ria.ru/location_rossiyskaya-federatsiya/'
+
+        response = requests.get(url)
+
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        news = soup.findAll('a', class_="list-item__title color-font-hover-only")
+        time = soup.findAll('div', class_="list-item__date")
+
+        news_list = []
+        times_list = []
+
+        for i in news:
+            i = i.text
+            news_list.append(i)
+        for i in time:
+            i = i.text
+            times_list.append(i)
+
+        index = 0
+
+        for new in news_list:
+            # print(f'\n{news_list[index]} - {times_list[index]}')
+            index = index + 1
+
+        return news_list, times_list, index
+
+    def get_weather(self, city):
+        base_url = f"http://wttr.in/{city}?format=%C+%t+%h"
+
+        response = requests.get(base_url)
+
+        if response.status_code == 200:
+            return response.text
+        else:
+            return "City not found or API error"
