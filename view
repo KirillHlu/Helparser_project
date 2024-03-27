@@ -9,16 +9,19 @@ class Main_root(Tk):
         super().__init__()
         self.resizable(width=False, height=False)
         self.geometry('800x450')
+        self.title('Helparser')
 
-
+        parser = Parsing1()
 
         self.news1 = Text(self, wrap="word", state="normal", width=41, height=20, background='#F3FFFF')
         self.news1.grid(row=0, column=0, padx=30, pady=30, sticky="nsew")
         self.btn1 = ttk.Button(text='👍🏻', padding=8, width=17)
         self.btn2 = ttk.Button(text='👎🏻', padding=8, width=17)
+        self.btn3 = ttk.Button(text='Search by word', padding=10, width=20, command=parser.click_first)
+        self.btn4 = ttk.Button(text='Search by information', padding=10, width=20, command=parser.click_second)
 
         # Create an instance of Parsing1
-        parser = Parsing1()
+
         news_list, times_list, index = parser.news()
 
         # Update the news1 Text widget with the news and time lists
@@ -54,4 +57,6 @@ class Main_root(Tk):
 
         self.btn1.place(x=42, y=380)
         self.btn2.place(x=220, y=380)
+        self.btn3.place(x=500, y=100)
+        self.btn4.place(x=500, y=200)
         label.place(x=680, y=00)
