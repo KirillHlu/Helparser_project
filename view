@@ -1,62 +1,152 @@
-from tkinter import *
+from tkinter import Tk, StringVar, Label, Text
 from tkinter import ttk
-from PIL import Image, ImageTk, ImageDraw, ImageFont
-
+import requests
+from bs4 import BeautifulSoup
 from model import Parsing1
-
-class Main_root(Tk):
+class SearchByWord():
     def __init__(self):
-        super().__init__()
-        self.resizable(width=False, height=False)
-        self.geometry('800x450')
-        self.title('Helparser')
+        self.root = Tk()
+        self.root.resizable(width=False, height=False)
+        self.root.geometry('800x500')
+        self.root.title('Search word')
 
-        parser = Parsing1()
+        self.message1 = StringVar()
+        self.message2 = StringVar()
 
-        self.news1 = Text(self, wrap="word", state="normal", width=41, height=20, background='#F3FFFF')
-        self.news1.grid(row=0, column=0, padx=30, pady=30, sticky="nsew")
-        self.btn1 = ttk.Button(text='👍🏻', padding=8, width=17)
-        self.btn2 = ttk.Button(text='👎🏻', padding=8, width=17)
-        self.btn3 = ttk.Button(text='Search by word', padding=10, width=20, command=parser.click_first)
-        self.btn4 = ttk.Button(text='Search by information', padding=10, width=20, command=parser.click_second)
+        self.label1 = Label(self.root, width=500, height=800)
+        self.text1 = ttk.Label(self.root, text='Link:', font=("Arial", 15))
+        self.enter1 = ttk.Entry(self.root, textvariable=self.message1, font=("Arial", 15))
+        self.text2 = ttk.Label(self.root, text='Word:', font=('Arial', 15))
+        self.enter2 = ttk.Entry(self.root, textvariable=self.message2, font=("Arial", 15))
+        self.found_text = Text(self.root, wrap='word', state='disabled', width=40, height=25)
+        self.found_text.grid(row=0, column=0, padx=400, pady=20, sticky='nsew')
+        self.btn1 = ttk.Button(self.root, text='Search', padding=10, width=20, command=self.click11)
+        self.btn2 = ttk.Button(self.root, text='Save inf', padding=8, width=16, command=self.click12)
+        self.found_text.config(state='normal')
 
-        # Create an instance of Parsing1
+        self.found_text.tag_config("big", font=("Helvetica", 12))
+        self.found_text.tag_add("big", "1.0", "end")
 
-        news_list, times_list, index = parser.news()
+        self.label1.place(x=0, y=0)
+        self.text1.place(x=10, y=10)
+        self.enter1.place(x=10, y=50)
+        self.text2.place(x=10, y=110)
+        self.enter2.place(x=10, y=150)
+        self.btn1.place(x=40, y=220)
+        self.btn2.place(x=500, y=440)
 
-        # Update the news1 Text widget with the news and time lists
-        for i in range(index):
-            self.news1.insert(END, f'\n{news_list[i]} - {times_list[i]} \n\n\n')
+        self.root.mainloop()
 
-        self.news1.config(state="disabled")
+    def click11(self):
+        found_inf = []
+        index2 = 0
+        url = self.enter1.get()
+        word = self.enter2.get()
 
-        with open("weather_city", 'r') as f:
-            city = f.read().strip()
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        word = word.lower()
+
+        elements = soup.find_all(text=lambda text: word in text.lower())
+
+        for element in elements:
+            parent = element.parent
+            if parent.name != 'script':
+                self.found_text.insert('end', f'Tag: {parent.name}\n')
+                self.found_text.insert('end', f"Class: {parent.get('class')}\n")
+                self.found_text.insert('end', f'Text: {element.strip()}\n\n')
+
+    def click12(self):
+        found_inf = []
+        index2 = 0
+        url = self.enter1.get()
+        word = self.enter2.get()
+
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        word = word.lower()
+
+        elements = soup.find_all(text=lambda text: word in text.lower())
+
+        for element in elements:
+            parent = element.parent
+            if parent.name:
+                with open('parsed_files1.txt', 'a', encoding='utf-8') as file:
+                    file.write(f'Url: {url}')
+                    file.write(f'\t\nTag: {parent.name}\n')
+                    file.write(f"Class: {parent.get('class')}\n")
+                    file.write(f'Text: {element.strip()}\n\n\n\n')
 
 
-        weather_info = parser.get_weather(city)
-        weather_info = weather_info.split()
-        weather_info = weather_info[1]
-        weather_info = weather_info.replace('°C', "")
 
+class SearchByInf:
+    def __init__(self):
+        self.root2 = Tk()
+        self.root2.resizable(width=False, height=False)
+        self.root2.geometry('800x500')
+        self.root2.title('Search word')
 
-        image = Image.open("weather1.jpg")
-        draw = ImageDraw.Draw(image)
-        if len(weather_info) == 3:
-            font = ImageFont.truetype("arial.ttf", 200)  # Выбираем шрифт и размер текста
-            draw.text((145, 400), weather_info, fill="white", font=font)
-        else:
-            font = ImageFont.truetype("arial.ttf", 250)  # Выбираем шрифт и размер текста
-            draw.text((200, 380), weather_info, fill="white", font=font)
-        image = image.resize((100, 100))
-        photo = ImageTk.PhotoImage(image)
-        label = Label(self, image=photo)
-        label.image = photo
+        self.message1 = StringVar()
+        self.message2 = StringVar()
+        self.message3 = StringVar()
 
+        self.label1 = Label(self.root2, width=500, height=800)
+        self.text1 = ttk.Label(self.root2, text='Link:', font=("Arial", 15))
+        self.text2 = ttk.Label(self.root2, text='Tag:', font=('Arial', 15))
+        self.text3 = ttk.Label(self.root2, text='Class:', font=('Arial', 15))
+        self.enter1 = ttk.Entry(self.root2, textvariable=self.message1, font=("Arial", 15))
+        self.enter2 = ttk.Entry(self.root2, textvariable=self.message2, font=("Arial", 15))
+        self.enter3 = ttk.Entry(self.root2, textvariable=self.message3, font=("Arial", 15))
+        self.found_text = Text(self.root2, wrap='word', state='disabled', width=40, height=25)
+        self.btn1 = ttk.Button(self.root2, text='Search', padding=10, width=20, command=self.click21)
+        self.btn2 = ttk.Button(self.root2, text='Save inf', padding=8, width=16, command=self.click22)
 
+        self.found_text.grid(row=0, column=0, padx=400, pady=20, sticky='nsew')
+        self.found_text.config(state='normal')
+        self.found_text.tag_config("big", font=("Helvetica", 12))
+        self.found_text.tag_add("big", "1.0", "end")
 
-        self.btn1.place(x=42, y=380)
-        self.btn2.place(x=220, y=380)
-        self.btn3.place(x=500, y=100)
-        self.btn4.place(x=500, y=200)
-        label.place(x=680, y=00)
+        self.label1.place(x=0, y=0)
+        self.text1.place(x=10, y=10)
+        self.enter1.place(x=10, y=50)
+        self.text2.place(x=10, y=110)
+        self.enter2.place(x=10, y=150)
+        self.text3.place(x=10, y=210)
+        self.enter3.place(x=10, y=250)
+        self.btn1.place(x=40, y=310)
+        self.btn2.place(x=500, y=440)
+
+        self.root2.mainloop()
+
+    def click21(self):
+        url = self.enter1.get()
+        tag = self.enter2.get()
+        class1 = self.enter3.get()
+
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        data = soup.findAll(tag, class1)
+
+        self.found_text.insert('end', f'The information from {url} ({tag}, {class1}): ')
+        for i in data:
+            self.found_text.insert('end', f'\n{i.text}')
+        self.found_text.insert('end', f'\n\n\n')
+
+    def click22(self):
+        url = self.enter1.get()
+        tag = self.enter2.get()
+        class1 = self.enter3.get()
+
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        data = soup.findAll(tag, class1)
+
+        with open('parsed_files2.txt', 'a', encoding='utf-8') as file:
+            file.write(f'The information from {url} ({tag}, {class1}): ')
+            for i in data:
+                file.write(f'\n{i.text}')
+            file.write(f'\n\n\n')
