@@ -126,7 +126,7 @@ class SearchByInf:
         class1 = self.enter3.get()
 
         response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'html.parser')
 
         data = soup.findAll(tag, class1)
 
@@ -141,7 +141,7 @@ class SearchByInf:
         class1 = self.enter3.get()
 
         response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'html.parser')
 
         data = soup.findAll(tag, class1)
 
