@@ -7,7 +7,7 @@ class Parsing1:
 
         response = requests.get(url)
 
-        soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'html.parser')
 
         news = soup.findAll('a', class_="list-item__title color-font-hover-only")
         time = soup.findAll('div', class_="list-item__date")
