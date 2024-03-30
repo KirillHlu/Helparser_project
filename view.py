@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from model import Speak
 from translation import translate1
+import time
 
 class SettingsApp:
     def __init__(self):
@@ -35,11 +36,11 @@ class SettingsApp:
             default_language = data1["Language"]
 
         language_var = StringVar(value=default_language)
-        languages = ["English", 'Russian', 'German']
+        languages = ["English", 'Russian', 'German', "French", "Mexican","Japanese", 'Chinese']
 
         country_var = StringVar(value=default_country)
         countries = [
-            "United States", "India", "Brazil", "Russia",
+            "United States of America", "Russia", "Japan",
             "United Kingdom", "France", "Germany"
         ]
 
@@ -130,6 +131,7 @@ class SearchByWord():
                 self.found_text.insert('end', f'Tag: {parent.name}\n')
                 self.found_text.insert('end', f"Class: {parent.get('class')}\n")
                 self.found_text.insert('end', f'Text: {element.strip()}\n\n')
+                time.sleep(0.2)
 
 
     def click12(self):
@@ -153,6 +155,7 @@ class SearchByWord():
                     file.write(f'\t\nTag: {parent.name}\n')
                     file.write(f"Class: {parent.get('class')}\n")
                     file.write(f'Text: {element.strip()}\n\n\n\n')
+                    time.sleep(0.2)
 
     def click13(self):
         url = self.enter1.get()
@@ -169,6 +172,7 @@ class SearchByWord():
             parent = element.parent
             if parent.name != 'script':
                 Speak().text_to_speech(element.strip())
+                time.sleep(0.2)
 
 
 
@@ -226,6 +230,7 @@ class SearchByInf:
         self.found_text.insert('end', f'The information from {url} ({tag}, {class1}): ')
         for i in data:
             self.found_text.insert('end', f'\n{i.text}')
+            time.sleep(0.2)
         self.found_text.insert('end', f'\n\n\n')
 
     def click22(self):
@@ -242,4 +247,5 @@ class SearchByInf:
             file.write(f'The information from {url} ({tag}, {class1}): ')
             for i in data:
                 file.write(f'\n{i.text}')
+                time.sleep(0.2)
             file.write(f'\n\n\n')
