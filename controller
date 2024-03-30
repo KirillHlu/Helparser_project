@@ -1,10 +1,8 @@
 from view import *
-
-
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-
+from translation import translate1
 from model import Parsing1
 
 class Main_root(Tk):
@@ -12,7 +10,7 @@ class Main_root(Tk):
         super().__init__()
         self.resizable(width=False, height=False)
         self.geometry('800x450')
-        self.title('Helparser')
+        self.title(translate1['Helparser'])
 
         parser = Parsing1()
 
@@ -20,10 +18,9 @@ class Main_root(Tk):
         self.news1.grid(row=0, column=0, padx=30, pady=30, sticky="nsew")
         self.btn1 = ttk.Button(text='👍🏻', padding=8, width=17)
         self.btn2 = ttk.Button(text='👎🏻', padding=8, width=17)
-        self.btn3 = ttk.Button(text='Search by word', padding=10, width=20, command=SearchByWord)
-        self.btn4 = ttk.Button(text='Search by information', padding=10, width=20, command=SearchByInf)
-
-        # Create an instance of Parsing1
+        self.btn3 = ttk.Button(text=translate1['Search by word'], padding=10, width=20, command=SearchByWord)
+        self.btn4 = ttk.Button(text=translate1['Search by information'], padding=10, width=20, command=SearchByInf)
+        self.btn5 = ttk.Button(text=translate1['Settings'], padding=10, width=20, command=SettingsApp)
 
         news_list, times_list, index = Parsing1().news()
 
@@ -33,13 +30,8 @@ class Main_root(Tk):
 
         self.news1.config(state="disabled")
 
-        with open("weather_city", 'r') as f:
-            city = f.read().strip()
 
-
-        weather_info = Parsing1().get_weather(city)
-
-
+        weather_info = Parsing1().get_weather()
 
 
         image = Image.open("weather1.jpg")
@@ -63,7 +55,9 @@ class Main_root(Tk):
         self.btn2.place(x=220, y=380)
         self.btn3.place(x=500, y=100)
         self.btn4.place(x=500, y=200)
+        self.btn5.place(x=500, y=300)
         label.place(x=680, y=00)
+
 
 if __name__ == "__main__":
     app = Main_root()
