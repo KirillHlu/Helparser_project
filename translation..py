@@ -26,7 +26,7 @@ if language == 'English':
                 }
 
 
-if language == 'Russian':
+elif language == 'Russian':
     translate1 = {'Helparser': 'Helparser',
                   'Search by word': 'Искать по слову',
                   'Search by information': 'Искать по инф.',
@@ -46,7 +46,7 @@ if language == 'Russian':
                   'Your country has no news': 'В вашей стране нет новостей',
                   }
 
-if language == 'German':
+elif language == 'German':
     translate1 = {'Helparser': 'Helparser',
                   'Search by word': 'Nach Wort suchen',
                   'Search by information': 'Nach Informationen suchen',
@@ -68,7 +68,7 @@ if language == 'German':
 
 
 
-if language == 'French':
+elif language == 'French':
     translate1 = {'Helparser': 'Helparser',
                   'Search by word': 'Rechercher par mot',
                   'Search by information': 'Rechercher par information',
@@ -89,7 +89,7 @@ if language == 'French':
                   }
 
 
-if language == "Mexican":
+elif language == "Mexican":
     translate1={
         'Helparser': 'Helparser',
         'Search by word': 'Buscar por palabra',
@@ -111,7 +111,7 @@ if language == "Mexican":
     }
 
 
-if language == 'Japanese':
+elif language == 'Japanese':
    translate1 = {
         'Helparser': 'Helparser',
         'Search by word': '単語で検索',
@@ -130,10 +130,10 @@ if language == 'Japanese':
         'Tag:': 'タグ:',
         'Class:': 'クラス:',
         'Your country has no news': "あなたの国にはニュースがありません",
-    }
+   }
 
 
-if language == "Chinese":
+elif language == "Chinese":
     translate1 =  {
         'Helparser': 'Helparser',
         'Search by word': '按单词搜索',
@@ -152,4 +152,24 @@ if language == "Chinese":
         'Tag:': '标签:',
         'Class:': '类:',
         'Your country has no news': '你的国家没有新闻',
-}
+    }
+
+else:
+    translate1 = {'Helparser': 'Helparser',
+                  'Search by word': 'Search by word',
+                  'Search by information': 'Search by information',
+                  'Settings': 'Settings',
+                  'Language: ': 'Language: ',
+                  'Country: ': 'Country: ',
+                  'City:': 'City:',
+                  'Submit': 'Submit',
+                  'Link:': 'Link:',
+                  'Word:': 'Word:',
+                  'Search': 'Search',
+                  'Save inf': 'Save inf',
+                  'Speak': 'Speak',
+                  'Search words': 'Search words',
+                  'Tag:': 'Tag:',
+                  'Class:': 'Class:',
+                  'Your country has no news': 'Your country has no news'
+    }
