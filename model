@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import pyttsx3
+import json
 
 class Parsing1:
     def news(self):
@@ -30,7 +32,11 @@ class Parsing1:
 
         return news_list, times_list, index
 
-    def get_weather(self, city):
+    def get_weather(self):
+        with open('settings.json', 'r') as file:
+            data = json.load(file)
+
+        city = data["City"]
         base_url = f"http://wttr.in/{city}?format=%t"
 
         response = requests.get(base_url)
@@ -38,4 +44,16 @@ class Parsing1:
         if response.status_code == 200:
             return response.text
         else:
-            return "City not found or API error"
+            return ""
+
+class Speak():
+    def __init__(self):
+        pass
+
+    def text_to_speech(self, text):
+        lang = ('ru')
+        engine = pyttsx3.init()
+        engine.setProperty('rate', 175)  # Устанавливаем скорость озвучивания
+        engine.setProperty('voice', lang)  # Устанавливаем язык озвучивания
+        engine.say(text)
+        engine.runAndWait()
