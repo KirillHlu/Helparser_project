@@ -2,35 +2,59 @@ from bs4 import BeautifulSoup
 import requests
 import pyttsx3
 import json
+from translation import translate1
+import time
 
 class Parsing1:
     def news(self):
-        url = 'https://ria.ru/location_rossiyskaya-federatsiya/'
+        with open('settings.json', 'r') as file:
+            data = json.load(file)
 
-        response = requests.get(url)
+        country = data["Country"]
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+        if country == 'Russia':
+            url = 'https://ria.ru/location_rossiyskaya-federatsiya/'
+            response = requests.get(url)
 
-        news = soup.findAll('a', class_="list-item__title color-font-hover-only")
-        time = soup.findAll('div', class_="list-item__date")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            news = soup.findAll('a', class_="list-item__title color-font-hover-only")
+            news_list = []
 
-        news_list = []
-        times_list = []
+            for i in news:
+                i = i.text
+                news_list.append(i)
+                time.sleep(0.2)
+            return news_list
 
-        for i in news:
-            i = i.text
-            news_list.append(i)
-        for i in time:
-            i = i.text
-            times_list.append(i)
+        if country == 'United States of America':
+            news_list = []
+            response = requests.get("https://www.cbsnews.com/us/")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('h4', class_="item__hed")
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+            return news_list
 
-        index = 0
+        if country == 'Japan':
+            news_list = []
+            response = requests.get("https://sputniknews.jp/?ysclid=lue07spn55828484432")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('span', class_="cell-main-photo__size")
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+            return news_list
 
-        for new in news_list:
-            # print(f'\n{news_list[index]} - {times_list[index]}')
-            index = index + 1
-
-        return news_list, times_list, index
+        else:
+            news_list = translate1['Your country has no news']
+            return news_list
 
     def get_weather(self):
         with open('settings.json', 'r') as file:
