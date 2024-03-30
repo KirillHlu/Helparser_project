@@ -52,6 +52,19 @@ class Parsing1:
                 time.sleep(0.1)
             return news_list
 
+        if country == "United Kingdom":
+            news_list = []
+            response = requests.get("https://www.independent.co.uk/news/uk?CMP=ILC-refresh")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('a', class_="title")
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+            return news_list
+
         else:
             news_list = translate1['Your country has no news']
             return news_list
