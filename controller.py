@@ -58,7 +58,7 @@ class Main_root(Tk):
         self.btn3.place(x=500, y=100)
         self.btn4.place(x=500, y=200)
         self.btn5.place(x=500, y=300)
-        label.place(x=680, y=0)
+        label.place(x=680, y=00)
 
 
 if __name__ == "__main__":
