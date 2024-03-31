@@ -20,6 +20,7 @@ class Main_root(Tk):
         self.btn4 = ttk.Button(text=translate1['Search by information'], padding=10, width=20, command=SearchByInf)
         self.btn5 = ttk.Button(text=translate1['Settings'], padding=10, width=20, command=SettingsApp)
 
+
         news_list = Parsing1().news()
 
         # Update the news1 Text widget with the news and time lists
@@ -56,8 +57,8 @@ class Main_root(Tk):
         self.btn1.place(x=42, y=380)
         self.btn2.place(x=220, y=380)
         self.btn3.place(x=500, y=100)
-        self.btn4.place(x=500, y=200)
-        self.btn5.place(x=500, y=300)
+        self.btn4.place(x=500, y=180)
+        self.btn5.place(x=500, y=260)
         label.place(x=680, y=00)
 
 
