@@ -89,7 +89,7 @@ elif language == 'French':
                   }
 
 
-elif language == "Mexican":
+elif language == "Spanish":
     translate1={
         'Helparser': 'Helparser',
         'Search by word': 'Buscar por palabra',
