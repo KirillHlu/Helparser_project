@@ -1,11 +1,13 @@
 import json
-from tkinter import Tk, StringVar, Label, Text
-from tkinter import ttk
 import requests
 from bs4 import BeautifulSoup
 from model import Speak
 from translation import translate1
 import time
+from tkinter import *
+from PIL import ImageTk
+import qrcode
+from tkinter import ttk
 
 class SettingsApp:
     def __init__(self):
@@ -36,12 +38,12 @@ class SettingsApp:
             default_language = data1["Language"]
 
         language_var = StringVar(value=default_language)
-        languages = ["English", 'Russian', 'German', "French", "Mexican","Japanese", 'Chinese']
+        languages = ["English", 'Russian', 'German', "French", "Spanish", "Japanese", 'Chinese']
 
         country_var = StringVar(value=default_country)
         countries = [
             "United States of America", "Russia", "Japan",
-            "United Kingdom", "France", "Germany"
+            "United Kingdom", "France", "Germany", 'Mexico'
         ]
 
         city_var = StringVar(value=default_city)
