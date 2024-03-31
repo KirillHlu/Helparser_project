@@ -24,45 +24,103 @@ class Parsing1:
                 i = i.text
                 news_list.append(i)
                 time.sleep(0.2)
+
             return news_list
 
-        if country == 'United States of America':
+        elif country == 'United States of America':
+
             news_list = []
             response = requests.get("https://www.cbsnews.com/us/")
             soup = BeautifulSoup(response.text, 'html.parser')
             data = soup.findAll('h4', class_="item__hed")
+
             for i in data:
                 i = i.text
                 i = i.split()
                 i = " ".join(i)
                 news_list.append(i)
                 time.sleep(0.1)
+
             return news_list
 
-        if country == 'Japan':
+        elif country == 'Japan':
+
             news_list = []
             response = requests.get("https://sputniknews.jp/?ysclid=lue07spn55828484432")
             soup = BeautifulSoup(response.text, 'html.parser')
             data = soup.findAll('span', class_="cell-main-photo__size")
+
             for i in data:
                 i = i.text
                 i = i.split()
                 i = " ".join(i)
                 news_list.append(i)
                 time.sleep(0.1)
+
             return news_list
 
-        if country == "United Kingdom":
+        elif country == "United Kingdom":
+
             news_list = []
             response = requests.get("https://www.independent.co.uk/news/uk?CMP=ILC-refresh")
             soup = BeautifulSoup(response.text, 'html.parser')
             data = soup.findAll('a', class_="title")
+
             for i in data:
                 i = i.text
                 i = i.split()
                 i = " ".join(i)
                 news_list.append(i)
                 time.sleep(0.1)
+
+            return news_list
+
+        elif country == "France":
+
+            news_list = []
+            response = requests.get("https://francais.rt.com/france?ysclid=luffwocxau48285105")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('a', class_="card__underline")
+
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+
+            return news_list
+
+        elif country == "Germany":
+
+            news_list = []
+            response = requests.get('https://www.tagesschau.de/inland')
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('p', class_="teaser__shorttext")
+
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+
+            return news_list
+
+        elif country == "Mexico":
+
+            news_list = []
+            response = requests.get('https://diario.mx/')
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data = soup.findAll('p', class_="texto_2")
+
+            for i in data:
+                i = i.text
+                i = i.split()
+                i = " ".join(i)
+                news_list.append(i)
+                time.sleep(0.1)
+
             return news_list
 
         else:
