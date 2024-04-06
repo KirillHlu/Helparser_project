@@ -4,6 +4,8 @@ import pyttsx3
 import json
 from translation import translate1
 import time
+import datetime
+
 
 class Parsing1:
     def news(self):
@@ -46,9 +48,9 @@ class Parsing1:
         elif country == 'Japan':
 
             news_list = []
-            response = requests.get("https://sputniknews.jp/?ysclid=lue07spn55828484432")
+            response = requests.get("https://www.nikkei.com/")
             soup = BeautifulSoup(response.text, 'html.parser')
-            data = soup.findAll('span', class_="cell-main-photo__size")
+            data = soup.findAll('a', class_="fauxBlockLink_fzngw6j")
 
             for i in data:
                 i = i.text
