@@ -22,7 +22,8 @@ if language == 'English':
                   'Search words': 'Search words',
                   'Tag:': 'Tag:',
                   'Class:': 'Class:',
-                  'Your country has no news': 'Your country has no news'
+                  'Your country has no news': 'Your country has no news',
+                  'Qr-Code': 'Qr-Code'
                 }
 
 
@@ -44,6 +45,7 @@ elif language == 'Russian':
                   'Tag:': 'Тег:',
                   'Class:': 'Класс:',
                   'Your country has no news': 'В вашей стране нет новостей',
+                  'Qr-Code': 'Qr-код'
                   }
 
 elif language == 'German':
@@ -64,6 +66,7 @@ elif language == 'German':
                   'Tag:': 'Tag:',
                   'Class:': 'Klasse:',
                   'Your country has no news': 'Ihr Land hat keine Nachrichten',
+                  'Qr-Code': 'Qr-Codes'
                   }
 
 
@@ -85,7 +88,8 @@ elif language == 'French':
                   'Search words': 'Rechercher des mots',
                   'Tag:': 'Tag:',
                   'Class:': 'Classe:',
-                  'Your country has no news': "Votre pays n/'a pas de nouvelles"
+                  'Your country has no news': "Votre pays n/'a pas de nouvelles",
+                  'Qr-Code': 'Code QR'
                   }
 
 
@@ -108,6 +112,7 @@ elif language == "Spanish":
         'Tag:': 'Etiqueta:',
         'Class:': 'Clase:',
         'Your country has no news': 'Tu país no tiene noticias',
+        'Qr-Code': 'Código Qr'
     }
 
 
@@ -130,11 +135,12 @@ elif language == 'Japanese':
         'Tag:': 'タグ:',
         'Class:': 'クラス:',
         'Your country has no news': "あなたの国にはニュースがありません",
+        'Qr-Code': 'Código Qr'
    }
 
 
 elif language == "Chinese":
-    translate1 =  {
+    translate1 = {
         'Helparser': 'Helparser',
         'Search by word': '按单词搜索',
         'Search by information': '按信息搜索',
@@ -152,6 +158,7 @@ elif language == "Chinese":
         'Tag:': '标签:',
         'Class:': '类:',
         'Your country has no news': '你的国家没有新闻',
+        'Qr-Code': 'Qr码'
     }
 
 else:
@@ -171,5 +178,6 @@ else:
                   'Search words': 'Search words',
                   'Tag:': 'Tag:',
                   'Class:': 'Class:',
-                  'Your country has no news': 'Your country has no news'
+                  'Your country has no news': 'Your country has no news',
+                  'Qr-Code': 'Qr-code',
     }
