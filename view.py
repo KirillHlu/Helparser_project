@@ -9,6 +9,7 @@ from PIL import ImageTk
 import qrcode
 from tkinter import ttk
 
+
 class SettingsApp:
     def __init__(self):
 
@@ -251,3 +252,37 @@ class SearchByInf:
                 file.write(f'\n{i.text}')
                 time.sleep(0.2)
             file.write(f'\n\n\n')
+
+class QRCodeGenerator():
+    def __init__(self):
+        self.rootqr = Tk()
+        self.rootqr.title("Qr code")
+        self.rootqr.geometry('500x300')
+        self.rootqr.resizable(width=False, height=False)
+
+        self.url_label = Label(self.rootqr, text="Link:", font=("Arial", 15))
+        self.url_label.place(x=40, y=40)
+
+        self.url_entry = ttk.Entry(self.rootqr, font=("Arial", 15))
+        self.url_entry.place(x=40, y=80)
+
+        self.btn = ttk.Button(self.rootqr, text="Create an QR-code", command=self.btncommand1, width=20, padding=10)
+        self.btn.place(x=80, y=150)
+        self.rootqr.mainloop()
+
+    def btncommand1(self):
+        url = self.url_entry.get()
+        qr = qrcode.QRCode(
+            version=1,
+            box_size=10,
+            border=5)
+
+        qr.add_data(url)
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill='black', back_color='white')
+        qr_img.save('Main_qr.png')
+        qr_img_resized = qr_img.resize((80,80))
+        qr_code_img = ImageTk.PhotoImage(qr_img_resized)
+        self.qr_code_label = Label(image=qr_code_img)
+        self.qr_code_label.image = qr_code_img
+        self.qr_code_label.place(x=718, y=370)
