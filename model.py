@@ -4,8 +4,7 @@ import pyttsx3
 import json
 from translation import translate1
 import time
-import datetime
-
+import os
 
 class Parsing1:
     def news(self):
@@ -154,3 +153,17 @@ class Speak():
         engine.setProperty('voice', lang)  # Устанавливаем язык озвучивания
         engine.say(text)
         engine.runAndWait()
+
+
+class Open_txt_class():
+    def __int__(self):
+        pass
+
+    def open_first_txt(self):
+        os.system('parsed_files1.txt')
+
+    def open_second_txt(self):
+        os.system('parsed_files2.txt')
+
+    def open_third_txt(self):
+        os.system('nice_news.txt')
