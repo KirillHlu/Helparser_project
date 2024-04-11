@@ -1,7 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-from model import Speak
+from model import Speak, Open_txt_class
 from translation import translate1
 import time
 from tkinter import *
@@ -286,3 +286,17 @@ class QRCodeGenerator():
         self.qr_code_label = Label(image=qr_code_img)
         self.qr_code_label.image = qr_code_img
         self.qr_code_label.place(x=718, y=370)
+
+
+class Txt_root():
+    def __init__(self):
+        self.root_txt = Tk()
+        self.root_txt.geometry('450x250')
+        self.root_txt.title('Open files')
+        self.btn = ttk.Button(self.root_txt, text=translate1["By word"], command=Open_txt_class().open_first_txt, width=12, padding=20)
+        self.btn2 = ttk.Button(self.root_txt, text=translate1["By inf"], command=Open_txt_class().open_second_txt, width=12, padding=20)
+        self.btn3 = ttk.Button(self.root_txt, text=translate1["Nice news"], command=Open_txt_class().open_third_txt, width=12, padding=20)
+        self.btn.place(x=15, y=90)
+        self.btn2.place(x=150, y=90)
+        self.btn3.place(x=285, y=90)
+        self.root_txt.mainloop()
