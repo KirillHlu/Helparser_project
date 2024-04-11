@@ -33,7 +33,7 @@ class Main_root(Tk):
         self.btn4 = ttk.Button(text=translate1['Search by information'], padding=10, width=20, command=SearchByInf)
         self.btn5 = ttk.Button(text=translate1['Settings'], padding=10, width=20, command=SettingsApp)
         self.btn6 = ttk.Button(text=translate1['Qr-Code'], padding=10, width=20, command=QRCodeGenerator)
-        self.btn7 = ttk.Button(text='Working with a table', padding=10, width=20)
+        self.btn7 = ttk.Button(text=translate1['Working with a parsed files'], command=Txt_root, padding=10, width=20)
 
 
         news_list = Parsing1().news()
