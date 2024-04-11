@@ -23,7 +23,11 @@ if language == 'English':
                   'Tag:': 'Tag:',
                   'Class:': 'Class:',
                   'Your country has no news': 'Your country has no news',
-                  'Qr-Code': 'Qr-Code'
+                  'Qr-Code': 'Qr-Code',
+                  'Working with a parsed files': 'Working with a parsed files',
+                  "By word": "By word",
+                  "By inf": "By inf",
+                  "Nice news": "Nice news"
                 }
 
 
@@ -45,7 +49,11 @@ elif language == 'Russian':
                   'Tag:': 'Тег:',
                   'Class:': 'Класс:',
                   'Your country has no news': 'В вашей стране нет новостей',
-                  'Qr-Code': 'Qr-код'
+                  'Qr-Code': 'Qr-код',
+                  'Working with a parsed files': 'Работать с файлами',
+                  "By word": 'По слову',
+                  "By inf": 'По информации',
+                  "Nice news": 'Хорошие новости'
                   }
 
 elif language == 'German':
@@ -66,7 +74,11 @@ elif language == 'German':
                   'Tag:': 'Tag:',
                   'Class:': 'Klasse:',
                   'Your country has no news': 'Ihr Land hat keine Nachrichten',
-                  'Qr-Code': 'Qr-Codes'
+                  'Qr-Code': 'Qr-Codes',
+                  'Working with a parsed files': 'Arbeiten mit analysierten Dateien',
+                  'By word': 'Mit Worten',
+                  'By inf': 'Von inf',
+                  'Nice news': 'Schöne Neuigkeiten'
                   }
 
 
@@ -89,12 +101,16 @@ elif language == 'French':
                   'Tag:': 'Tag:',
                   'Class:': 'Classe:',
                   'Your country has no news': "Votre pays n/'a pas de nouvelles",
-                  'Qr-Code': 'Code QR'
+                  'Qr-Code': 'Code QR',
+                  'Working with a parsed files': 'Travailler avec des fichiers analysés',
+                  'By word': 'Par mot',
+                  'By inf': 'Par inf',
+                  'Nice news': 'Bonne nouvelle',
                   }
 
 
 elif language == "Spanish":
-    translate1={
+    translate1 = {
         'Helparser': 'Helparser',
         'Search by word': 'Buscar por palabra',
         'Search by information': 'Buscar por información',
@@ -112,7 +128,11 @@ elif language == "Spanish":
         'Tag:': 'Etiqueta:',
         'Class:': 'Clase:',
         'Your country has no news': 'Tu país no tiene noticias',
-        'Qr-Code': 'Código Qr'
+        'Qr-Code': 'Código Qr',
+        'Working with a parsed files': 'Trabajar con archivos analizados',
+        'By word': 'Por palabra',
+        'By inf': 'Por inf',
+        'Nice news': 'Nive noticias'
     }
 
 
@@ -135,7 +155,11 @@ elif language == 'Japanese':
         'Tag:': 'タグ:',
         'Class:': 'クラス:',
         'Your country has no news': "あなたの国にはニュースがありません",
-        'Qr-Code': 'Código Qr'
+        'Qr-Code': 'QRコード',
+        'Working with a parsed files': '解析されたファイルの操作',
+        'By word': '言葉で',
+        'By inf': '情報により',
+        'Nice news': '嬉しいニュースです'
    }
 
 
@@ -158,8 +182,13 @@ elif language == "Chinese":
         'Tag:': '标签:',
         'Class:': '类:',
         'Your country has no news': '你的国家没有新闻',
-        'Qr-Code': 'Qr码'
+        'Qr-Code': 'Qr码',
+        'Working with a parsed files': '使用已解析的文件',
+        'By word': '按字词',
+        'By inf': '通过信息',
+        'Nice news': '好消息',
     }
+
 
 else:
     translate1 = {'Helparser': 'Helparser',
@@ -180,4 +209,8 @@ else:
                   'Class:': 'Class:',
                   'Your country has no news': 'Your country has no news',
                   'Qr-Code': 'Qr-code',
+                  'Working with a parsed files': 'Working with a parsed files',
+                  'By word': 'By word',
+                  'By inf': 'By inf',
+                  'Nice news': 'Nice news',
     }
