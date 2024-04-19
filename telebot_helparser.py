@@ -1,12 +1,14 @@
-import telebot
 from telebot import types
 import requests
 from bs4 import BeautifulSoup
 import time
+import telebot
+import qrcode
+from io import BytesIO
 
 city = "New York City"
 
-bot = telebot.TeleBot("TOKEN")
+bot = telebot.TeleBot("")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -15,11 +17,37 @@ def start_message(message):
     btn2 = types.KeyboardButton('/news')
     btn3 = types.KeyboardButton('/weather')
     markup.row(btn1, btn2, btn3)
-    bot.send_message(message.chat.id, 'Hello, it is helparser, send /commands to see commands.', reply_markup=markup)
+    name = str(message.chat.first_name)
+    bot.send_message(message.chat.id, f'Hello, {name}, it is helparser.\nSend me - /commands to see commands.', reply_markup=markup)
+
+@bot.message_handler(commands=['qr'])
+def generate_qr(message):
+    try:
+        link = message.text.split()
+        link = link[1]
+        qr = qrcode.QRCode(
+            version=1,
+            box_size=10,
+            border=5
+        )
+        qr.add_data(link)
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+
+        resized_image = qr_img.resize((300, 300))
+
+        buffer = BytesIO()
+        resized_image.save(buffer, format='PNG')
+        buffer.seek(0)
+
+        bot.send_photo(message.chat.id, photo=buffer)
+
+    except IndexError:
+        bot.reply_to(message, 'Send your link correctly, please!')
 
 @bot.message_handler(commands=['commands'])
 def start_message(message):
-    bot.send_message(message.chat.id, '/set_city - set the city to view the weather in it (/set_city "city"). \n\n/weather - view the weather.\n\n/search_by_word - command for parsing a page by a specific word (/search_by_word link word).\n\n/search_by_inf - find the text according to the given information (/search_by_inf url class tag).\n\n/news - viewing the news of the world.')
+    bot.send_message(message.chat.id, '/set_city - set the city to view the weather in it (/set_city "city"). \n\n/weather - view the weather.\n\n/search_by_word - command for parsing a page by a specific word (/search_by_word link word).\n\n/search_by_inf - find the text according to the given information (/search_by_inf url class tag).\n\n/news - viewing the news of the world.\n\n/qr - create an Qr-code by link (/qr link)')
 
 @bot.message_handler(commands=['set_city'])
 def set_city(message):
