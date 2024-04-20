@@ -21,7 +21,7 @@ def save_users(users):
 
 city = "New York City"
 
-bot = telebot.TeleBot("Token")
+bot = telebot.TeleBot("TOKEN")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -67,13 +67,15 @@ def set_city(message):
     try:
         global city
         city = message.text
-        city = city.split()
-        city = city[1]
+        city = city.replace('/set_city ', '')
         bot.reply_to(message, f"Your city ({city}) has been saved, enter /weather to view the weather")
 
         users = load_users()
-        city = city
-        users[str(message.chat.first_name)] = {'City': city}
+        chat_id = message.chat.id
+        user_id = message.from_user.id
+        chat_member = bot.get_chat_member(chat_id, user_id)
+        username = chat_member.user.username
+        users[username] = {'City': city}
         save_users(users)
 
     except IndexError:
@@ -81,18 +83,28 @@ def set_city(message):
 
 @bot.message_handler(commands=['weather'])
 def get_weather(message):
-    with open('users.json', 'r') as file:
-        data = json.load(file)
-    city = data[str(message.chat.first_name)].get('City')
-    base_url = f"http://wttr.in/{city}?format=%t"
-    response = requests.get(base_url)
+    try:
+        with open('users.json', 'r') as file:
+            data = json.load(file)
+        chat_id = message.chat.id
+        user_id = message.from_user.id
+        chat_member = bot.get_chat_member(chat_id, user_id)
+        username = chat_member.user.username
+        city = data[username].get('City')
+        base_url = f"http://wttr.in/{city}?format=%t"
+        response = requests.get(base_url)
 
-    if response.status_code == 200:
-        caption = f"The temperature is now in {city}: {response.text}"
-        bot.send_photo(message.chat.id,'https://get.wallhere.com/photo/2560x1440-px-abstract-geometry-lake-landscape-minimalism-mountains-Sun-trees-1425123.jpg',caption=caption)
+        if response.status_code == 200:
+            caption = f"The temperature is now in {city}: {response.text}"
+            bot.send_photo(message.chat.id,
+                           'https://get.wallhere.com/photo/2560x1440-px-abstract-geometry-lake-landscape-minimalism-mountains-Sun-trees-1425123.jpg',
+                           caption=caption)
 
-    else:
-        bot.send_message(message.chat.id, "Not found.")
+        else:
+            bot.send_message(message.chat.id, "Not found.")
+
+    except KeyError:
+        bot.reply_to(message, 'Please, send me your city (/set_city city) or make sure you have a username.')
 
 @bot.message_handler(commands=['search_by_word'])
 def search_by_word(message):
@@ -155,6 +167,22 @@ def search_by_word(message):
             break
 
     bot.send_message(message.chat.id, final_news)
+
+@bot.message_handler(commands=['img'])
+def search_images(message):
+    url = message.text.replace('/img ', '')
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        images = soup.find_all('img')
+
+        for img in images:
+            img_url = img.get('src')
+            if img_url and img_url.startswith('http'):          #проверка начала строки img_url с подстроки 'http'.
+                bot.send_photo(message.chat.id, img_url)
+    else:
+        print("Failed to fetch the website")
 
 @bot.message_handler(content_types=['text'])
 def talk(message):
