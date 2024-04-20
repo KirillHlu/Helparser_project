@@ -21,7 +21,7 @@ def save_users(users):
 
 city = "New York City"
 
-bot = telebot.TeleBot("7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY")
+bot = telebot.TeleBot("TOKEN")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
