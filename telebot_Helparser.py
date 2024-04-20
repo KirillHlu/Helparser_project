@@ -21,7 +21,7 @@ def save_users(users):
 
 city = "New York City"
 
-bot = telebot.TeleBot("TOKEN")
+bot = telebot.TeleBot("7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -60,7 +60,7 @@ def generate_qr(message):
 
 @bot.message_handler(commands=['commands'])
 def start_message(message):
-    bot.send_message(message.chat.id, '/set_city - set the city to view the weather in it (/set_city "city"). \n\n/weather - view the weather.\n\n/search_by_word - command for parsing a page by a specific word (/search_by_word link word).\n\n/search_by_inf - find the text according to the given information (/search_by_inf url class tag).\n\n/news - viewing the news of the world.\n\n/qr - create an Qr-code by link (/qr link)')
+    bot.send_message(message.chat.id, '/set_city - set the city to view the weather in it (/set_city "city"). \n\n/weather - view the weather.\n\n/search_by_word - command for parsing a page by a specific word (/search_by_word link word).\n\n/search_by_inf - find the text according to the given information (/search_by_inf url class tag).\n\n/news - viewing the news of the world.\n\n/qr - create an Qr-code by link (/qr link).\n\n/img - send images from the site (/img site).')
 
 @bot.message_handler(commands=['set_city'])
 def set_city(message):
@@ -170,19 +170,23 @@ def search_by_word(message):
 
 @bot.message_handler(commands=['img'])
 def search_images(message):
-    url = message.text.replace('/img ', '')
-    response = requests.get(url)
+    try:
+        url = message.text.replace('/img ', '')
+        response = requests.get(url)
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        images = soup.find_all('img')
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            images = soup.find_all('img')
 
-        for img in images:
-            img_url = img.get('src')
-            if img_url and img_url.startswith('http'):          #проверка начала строки img_url с подстроки 'http'.
-                bot.send_photo(message.chat.id, img_url)
-    else:
-        print("Failed to fetch the website")
+            for img in images:
+                img_url = img.get('src')
+                if img_url and img_url.startswith('http'):  # проверка начала строки img_url с подстроки 'http'.
+                    bot.send_photo(message.chat.id, img_url)
+        else:
+            bot.reply_to(message, 'Sorry, i cant find images!')
+
+    except telebot.apihelper.ApiTelegramException:
+        bot.reply_to(message, 'Sorry, i cant find images!')
 
 @bot.message_handler(content_types=['text'])
 def talk(message):
