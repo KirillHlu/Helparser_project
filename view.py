@@ -260,13 +260,13 @@ class QRCodeGenerator():
         self.rootqr.geometry('500x300')
         self.rootqr.resizable(width=False, height=False)
 
-        self.url_label = Label(self.rootqr, text="Link:", font=("Arial", 15))
+        self.url_label = Label(self.rootqr, text=translate1['Link:'], font=("Arial", 15))
         self.url_label.place(x=40, y=40)
 
         self.url_entry = ttk.Entry(self.rootqr, font=("Arial", 15))
         self.url_entry.place(x=40, y=80)
 
-        self.btn = ttk.Button(self.rootqr, text="Create an QR-code", command=self.btncommand1, width=20, padding=10)
+        self.btn = ttk.Button(self.rootqr, text=translate1["Create an QR-code"], command=self.btncommand1, width=20, padding=10)
         self.btn.place(x=80, y=150)
         self.rootqr.mainloop()
 
@@ -292,6 +292,7 @@ class Txt_root():
     def __init__(self):
         self.root_txt = Tk()
         self.root_txt.geometry('450x250')
+        self.root_txt.resizable(width=False, height=False)
         self.root_txt.title('Open files')
         self.btn = ttk.Button(self.root_txt, text=translate1["By word"], command=Open_txt_class().open_first_txt, width=12, padding=20)
         self.btn2 = ttk.Button(self.root_txt, text=translate1["By inf"], command=Open_txt_class().open_second_txt, width=12, padding=20)
