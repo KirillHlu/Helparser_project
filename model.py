@@ -5,6 +5,7 @@ import json
 from translation import translate1
 import time
 import os
+import webbrowser
 
 class Parsing1:
     def news(self):
@@ -167,3 +168,11 @@ class Open_txt_class():
 
     def open_third_txt(self):
         os.system('nice_news.txt')
+
+class Tg_bot():
+    def __init__(self):
+        pass
+
+    def open_link(self):
+        url = "https://t.me/helparser_bot"
+        webbrowser.open_new(url)
