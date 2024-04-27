@@ -7,10 +7,27 @@ import telebot
 import qrcode
 from io import BytesIO
 import json
-import datetime
+from model import Parsing1
 
 def main(page: ft.Page):
-    page.title = "Elevated button with 'click' event"
+    page.title = "Helparser's telebot"
+
+    def click2(self):
+        text = tb1.value
+        ids = []
+        with open('chat_ids.txt', 'r') as file:
+            chat_ids = file.readlines()
+            for chat_id in chat_ids:
+                if chat_id in ids:
+                    pass
+                else:
+                    print(chat_id.strip())
+                    token = '7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY'
+                    url = f'https://api.telegram.org/bot{token}/sendMessage'
+                    params = {'chat_id': chat_id, 'text': text}
+                    response = requests.get(url, params=params)
+                    ids.append(chat_id)
+            ids = []
 
 
     def button_clicked(e):
@@ -28,7 +45,7 @@ def main(page: ft.Page):
 
         city = "New York City"
 
-        bot = telebot.TeleBot("TOKEN")
+        bot = telebot.TeleBot("7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY")
 
         @bot.message_handler(commands=['start'])
         def start_message(message):
@@ -39,7 +56,9 @@ def main(page: ft.Page):
             markup.row(btn1, btn2, btn3)
             name = str(message.chat.first_name)
             bot.send_message(message.chat.id, f'Hello, {name}, it is helparser.\nSend me - /commands to see commands.',
-                             reply_markup=markup)
+                             reply_markup=markup),
+            with open('chat_ids.txt', 'a') as file:
+                file.write(str(message.chat.id) + '\n')
 
         @bot.message_handler(commands=['qr'])
         def generate_qr(message):
@@ -207,18 +226,52 @@ def main(page: ft.Page):
             page.update()
 
         bot.polling()
-    message1 = ft.Ref[ft.TextField]()
-    now = datetime.datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    page.add(
-        ft.Row(
-            [
-                ft.ElevatedButton("Start", on_click=button_clicked, data=0, width=250, height=100),
-                ft.Text(current_time)
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-        )
+
+    weather = Parsing1().get_weather()
+
+    main_root = ft.Row(
+        [
+            ft.Container(
+                content=ft.Text(f'{weather} 🌤️'),
+                margin=10,
+                padding=10,
+                alignment=ft.alignment.center,
+                bgcolor=ft.colors.BLUE,
+                width=100,
+                height=100,
+                border_radius=10,
+            ),
+            ft.Row(
+                [
+                    ft.ElevatedButton("Start", on_click=button_clicked, data=0, width=250, height=100)
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+        ],
     )
+
+    tb1 = ft.TextField(label='Text')
+    btn = ft.ElevatedButton("Send", on_click=click2, data=0, width=250, height=100)
+
+    def navigate(e):
+        index = page.navigation_bar.selected_index
+        page.clean()
+
+        if index == 0:
+            page.add(main_root)
+
+        elif index == 1:
+            page.add(tb1, btn)
+
+
+    page.navigation_bar = ft.NavigationBar(
+        destinations=[
+            ft.NavigationDestination(label='Main', icon=ft.icons.HOUSE),
+            ft.NavigationDestination(label='Send message', icon=ft.icons.MAIL),
+        ], on_change=navigate
+    )
+
+    page.add(main_root)
 
 
 ft.app(target=main)
