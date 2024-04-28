@@ -22,7 +22,7 @@ def main(page: ft.Page):
                     pass
                 else:
                     print(chat_id.strip())
-                    token = '7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY'
+                    token = 'TOKEN'
                     url = f'https://api.telegram.org/bot{token}/sendMessage'
                     params = {'chat_id': chat_id, 'text': text}
                     response = requests.get(url, params=params)
@@ -45,7 +45,7 @@ def main(page: ft.Page):
 
         city = "New York City"
 
-        bot = telebot.TeleBot("7010721973:AAEFw5C5VxaI0wbRJDx2LxGiS76XEJJAnvY")
+        bot = telebot.TeleBot("TOKEN")
 
         @bot.message_handler(commands=['start'])
         def start_message(message):
