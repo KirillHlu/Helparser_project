@@ -21,8 +21,14 @@ def main(page: ft.Page):
             for chat_id in chat_ids:
                 if chat_id in ids:
                     pass
+                elif len(link) == 0:
+                    token = ''
+                    url = f'https://api.telegram.org/bot{token}/sendMessage'
+                    params = {'chat_id': chat_id, 'text': text}
+                    response = requests.get(url, params=params)
+                    ids.append(chat_id)
                 else:
-                    token = 'TOKEN'
+                    token = ''
                     url_send_message = f'https://api.telegram.org/bot{token}/sendMessage'
                     url_send_photo = f'https://api.telegram.org/bot{token}/sendPhoto'
 
@@ -48,7 +54,7 @@ def main(page: ft.Page):
 
         city = "New York City"
 
-        bot = telebot.TeleBot("TOKEN")
+        bot = telebot.TeleBot("")
 
         @bot.message_handler(commands=['start'])
         def start_message(message):
