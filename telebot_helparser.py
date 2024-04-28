@@ -14,6 +14,7 @@ def main(page: ft.Page):
 
     def click2(self):
         text = tb1.value
+        link = tb2.value
         ids = []
         with open('chat_ids.txt', 'r') as file:
             chat_ids = file.readlines()
@@ -21,11 +22,13 @@ def main(page: ft.Page):
                 if chat_id in ids:
                     pass
                 else:
-                    print(chat_id.strip())
                     token = 'TOKEN'
-                    url = f'https://api.telegram.org/bot{token}/sendMessage'
-                    params = {'chat_id': chat_id, 'text': text}
-                    response = requests.get(url, params=params)
+                    url_send_message = f'https://api.telegram.org/bot{token}/sendMessage'
+                    url_send_photo = f'https://api.telegram.org/bot{token}/sendPhoto'
+
+                    # Отправка фото
+                    params_photo = {'chat_id': chat_id, 'photo': link, 'caption': text}
+                    response_photo = requests.get(url_send_photo, params=params_photo)
                     ids.append(chat_id)
             ids = []
 
@@ -219,9 +222,12 @@ def main(page: ft.Page):
 
         @bot.message_handler(content_types=['text'])
         def talk(message):
-            # page.add(ft.Text(f'[Log]: {message.text}'))
+            chat_id = message.chat.id
+            user_id = message.from_user.id
+            chat_member = bot.get_chat_member(chat_id, user_id)
+            username = chat_member.user.username
             bot.reply_to(message, 'Wrong request!')
-            page.controls.append(ft.Text(f'[Log]: {message.text}'))
+            page.controls.append(ft.Text(f'{username}: {message.text}'))
             page.scroll = "always"
             page.update()
 
@@ -251,6 +257,7 @@ def main(page: ft.Page):
     )
 
     tb1 = ft.TextField(label='Text')
+    tb2 = ft.TextField(label='Link for image')
     btn = ft.ElevatedButton("Send", on_click=click2, data=0, width=250, height=100)
 
     def navigate(e):
@@ -261,7 +268,7 @@ def main(page: ft.Page):
             page.add(main_root)
 
         elif index == 1:
-            page.add(tb1, btn)
+            page.add(tb1, tb2, btn)
 
 
     page.navigation_bar = ft.NavigationBar(
