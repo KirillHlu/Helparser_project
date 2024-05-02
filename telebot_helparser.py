@@ -12,6 +12,52 @@ from model import Parsing1
 def main(page: ft.Page):
     page.title = "Helparser's telebot"
 
+    def show_bs(e):
+        bs.open = True
+        bs.update()
+
+    def close_bs(e):
+        bs.open = False
+        bs.update()
+
+    bs = ft.BottomSheet(
+        ft.Container(
+            ft.Column(
+                [
+                    ft.Text("The server was started!"),
+                    ft.ElevatedButton("        Okay        ", on_click=close_bs),
+                ],
+                tight=True,
+            ),
+            padding=50,
+        ),
+        open=False,
+    )
+    page.overlay.append(bs),
+
+    def show_bs2(e):
+        bs2.open = True
+        bs2.update()
+
+    def close_bs2(e):
+        bs2.open = False
+        bs2.update()
+
+    bs2 = ft.BottomSheet(
+        ft.Container(
+            ft.Column(
+                [
+                    ft.Text("Message sent successfully!"),
+                    ft.ElevatedButton("        Okay        ", on_click=close_bs2),
+                ],
+                tight=True,
+            ),
+            padding=50,
+        ),
+        open=False,
+    )
+    page.overlay.append(bs2)
+
     def click2(self):
         text = tb1.value
         link = tb2.value
@@ -22,13 +68,13 @@ def main(page: ft.Page):
                 if chat_id in ids:
                     pass
                 elif len(link) == 0:
-                    token = ''
+                    token = 'TOKEN'
                     url = f'https://api.telegram.org/bot{token}/sendMessage'
                     params = {'chat_id': chat_id, 'text': text}
                     response = requests.get(url, params=params)
                     ids.append(chat_id)
                 else:
-                    token = ''
+                    token = 'TOKEN'
                     url_send_message = f'https://api.telegram.org/bot{token}/sendMessage'
                     url_send_photo = f'https://api.telegram.org/bot{token}/sendPhoto'
 
@@ -37,9 +83,11 @@ def main(page: ft.Page):
                     response_photo = requests.get(url_send_photo, params=params_photo)
                     ids.append(chat_id)
             ids = []
+        show_bs2(self)
 
 
     def button_clicked(e):
+        show_bs(e)
         def load_users():
             try:
                 with open('users.json', 'r') as file:
@@ -54,7 +102,7 @@ def main(page: ft.Page):
 
         city = "New York City"
 
-        bot = telebot.TeleBot("")
+        bot = telebot.TeleBot("TOKEN")
 
         @bot.message_handler(commands=['start'])
         def start_message(message):
