@@ -53,7 +53,7 @@ class Main_root(Tk):
 
         weather_info = Parsing1().get_weather()
 
-        image = Image.open("weather1.jpg")
+        image = Image.open("images/weather1.jpg")
         draw = ImageDraw.Draw(image)
 
         if len(weather_info) == 5:
@@ -68,7 +68,7 @@ class Main_root(Tk):
         label = Label(self, image=photo)
         label.image = photo
 
-        image2 = Image.open("Main_qr.png")
+        image2 = Image.open("images/Main_qr.png")
         image2 = image2.resize((80, 80))
         photo2 = ImageTk.PhotoImage(image2)
         self.label2 = Label(self, image=photo2)
