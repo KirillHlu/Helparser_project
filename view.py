@@ -280,7 +280,7 @@ class QRCodeGenerator():
         qr.add_data(url)
         qr.make(fit=True)
         qr_img = qr.make_image(fill='black', back_color='white')
-        qr_img.save('Main_qr.png')
+        qr_img.save('images/Main_qr.png')
         qr_img_resized = qr_img.resize((80,80))
         qr_code_img = ImageTk.PhotoImage(qr_img_resized)
         self.qr_code_label = Label(image=qr_code_img)
